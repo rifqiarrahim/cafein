@@ -1,0 +1,5 @@
+print("Wilujeng Sumping")
+print("Hello", "World!")
+print("Hello", "World!", sep='is')
+print("Telkom", "University" ,sep="***",end="...")
+print("The Best")
