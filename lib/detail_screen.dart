@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:wisata_bandung/model/tourism_place.dart';
+import 'package:wisata_bandung/model/cafe_place.dart';
 
 var informationTextStyle = TextStyle(fontFamily: 'Oxygen');
 
 class DetailScreen extends StatelessWidget {
-  final TourismPlace place;
+  final CafePlace place;
 
   DetailScreen({required this.place});
 
@@ -24,7 +24,7 @@ class DetailScreen extends StatelessWidget {
 }
 
 class DetailMobilePage extends StatelessWidget {
-  final TourismPlace place;
+  final CafePlace place;
 
   DetailMobilePage({required this.place});
 
@@ -37,7 +37,7 @@ class DetailMobilePage extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                Image.asset(place.imageAsset),
+                Image.asset(place.image1),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -84,7 +84,7 @@ class DetailMobilePage extends StatelessWidget {
                       Icon(Icons.calendar_today),
                       SizedBox(height: 8.0),
                       Text(
-                        place.openDays,
+                        place.openday,
                         style: informationTextStyle,
                       ),
                     ],
@@ -94,7 +94,7 @@ class DetailMobilePage extends StatelessWidget {
                       Icon(Icons.access_time),
                       SizedBox(height: 8.0),
                       Text(
-                        place.openTime,
+                        place.openhour,
                         style: informationTextStyle,
                       ),
                     ],
@@ -104,7 +104,7 @@ class DetailMobilePage extends StatelessWidget {
                       Icon(Icons.monetization_on),
                       SizedBox(height: 8.0),
                       Text(
-                        place.ticketPrice,
+                        place.price,
                         style: informationTextStyle,
                       ),
                     ],
@@ -127,15 +127,29 @@ class DetailMobilePage extends StatelessWidget {
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: place.imageUrls.map((url) {
-                  return Padding(
+                children: [
+                  Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(url),
+                      child: Image.network(place.image2),
                     ),
-                  );
-                }).toList(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(place.image3),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(place.image4),
+                    ),
+                  ),
+                ]
               ),
             ),
           ],
@@ -146,7 +160,7 @@ class DetailMobilePage extends StatelessWidget {
 }
 
 class DetailWebPage extends StatefulWidget {
-  final TourismPlace place;
+  final CafePlace place;
 
   DetailWebPage({required this.place});
 
@@ -188,7 +202,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                       child: Column(
                         children: [
                           ClipRRect(
-                            child: Image.asset(widget.place.imageAsset),
+                            child: Image.asset(widget.place.image1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           SizedBox(height: 16),
@@ -201,15 +215,29 @@ class _DetailWebPageState extends State<DetailWebPage> {
                               child: ListView(
                                 controller: _scrollController,
                                 scrollDirection: Axis.horizontal,
-                                children: widget.place.imageUrls.map((url) {
-                                  return Padding(
+                                children: [
+                                  Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(url),
+                                      child: Image.network(widget.place.image2),
                                     ),
-                                  );
-                                }).toList(),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(widget.place.image3),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(widget.place.image4),
+                                    ),
+                                  ),
+                                ]
                               ),
                             ),
                           ),
@@ -243,7 +271,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                       Icon(Icons.calendar_today),
                                       SizedBox(width: 8.0),
                                       Text(
-                                        widget.place.openDays,
+                                        widget.place.openday,
                                         style: informationTextStyle,
                                       ),
                                     ],
@@ -256,7 +284,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                   Icon(Icons.access_time),
                                   SizedBox(width: 8.0),
                                   Text(
-                                    widget.place.openTime,
+                                    widget.place.openhour,
                                     style: informationTextStyle,
                                   ),
                                 ],
@@ -267,7 +295,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                   Icon(Icons.monetization_on),
                                   SizedBox(width: 8.0),
                                   Text(
-                                    widget.place.ticketPrice,
+                                    widget.place.price,
                                     style: informationTextStyle,
                                   ),
                                 ],

@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wisata di Bandung',
+      title: 'Cafe di Bandung',
       theme: ThemeData(
         // This is the theme of your application.
         //

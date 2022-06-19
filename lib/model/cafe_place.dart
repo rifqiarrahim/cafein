@@ -1,26 +1,30 @@
-class TourismPlace {
-  String name;
-  String location;
-  String description;
-  String openDays;
-  String openTime;
-  String ticketPrice;
-  String imageAsset;
-  List<String> imageUrls;
+class CafePlace {
+  final String name;
+  final String address;
+  final String description;
+  final String openday;
+  final String openhour;
+  final String price;
+  final String image1;
+  final String image2;
+  final String image3;
+  final String image4;
 
-  TourismPlace({
-    required this.name,
-    required this.location,
-    required this.description,
-    required this.openDays,
-    required this.openTime,
-    required this.ticketPrice,
-    required this.imageAsset,
-    required this.imageUrls,
-  });
+  CafePlace(
+    this.name,
+    this.address,
+    this.description,
+    this.openday,
+    this.openhour,
+    this.price,
+    this.image1,
+    this.image2,
+    this.image3,
+    this.image4,
+  );
 }
-var tourismPlaceList = [
-  TourismPlace(
+/*var cafePlaceList = [
+  CafePlace(
     name: 'Farm House Lembang',
     location: 'Lembang',
     description:
@@ -35,7 +39,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/a9/33/43/liburan-di-farmhouse.jpg'
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Observatorium Bosscha',
     location: 'Lembang',
     description:
@@ -50,7 +54,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-o/11/3f/04/39/p-20171111-110220-largejpg.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Jalan Asia Afrika',
     location: 'Kota Bandung',
     description:
@@ -65,7 +69,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/ef/36/e2/jalan-asia-afrika.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Stone Garden',
     location: 'Padalarang',
     description:
@@ -80,7 +84,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-o/0d/a2/cb/05/stone-garden-citatah.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Taman Film Pasopati',
     location: 'Kota Bandung',
     description:
@@ -95,7 +99,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-w/09/73/33/05/taman-film-pasopati.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Museum Geologi',
     location: 'Kota Bandung',
     description:
@@ -110,7 +114,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-s/1a/55/e0/dc/geology-museum.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Floating Market',
     location: 'Lembang',
     description:
@@ -125,7 +129,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-p/19/ce/b4/9b/img20181224120857-largejpg.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Kawah Putih',
     location: 'Ciwidey',
     description:
@@ -140,7 +144,7 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-o/0a/8b/9a/79/2945-t00572-www-initempatwisat.jpg',
     ],
   ),
-  TourismPlace(
+  CafePlace(
     name: 'Ranca Upas',
     location: 'Ciwidey',
     description:
@@ -155,4 +159,4 @@ var tourismPlaceList = [
       'https://media-cdn.tripadvisor.com/media/photo-w/13/ee/27/0a/ranca-upas.jpg',
     ],
   ),
-];
+];*/
