@@ -4,6 +4,7 @@ import 'package:wisata_bandung/model/cafe_place.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -22,14 +23,16 @@ class MainScreen extends StatelessWidget {
 }
 class CafePlaceList extends StatelessWidget {
   Future<List<CafePlace>> getCafe() async {
-    var data = await http.get(Uri.parse("http://10.0.2.2:8000/api/cafe"));
-    var jsonData = json.decode(data.body);
+    final Dio dio = new Dio();
+    var response = await dio.get("http://127.0.0.1:8000/api/cafe");
+    var jsonData = json.decode(response.data);
     List<CafePlace> cafes = [];
     for(var c in jsonData){
       CafePlace cafe = CafePlace(c["name"],c["address"],c["description"],c["openday"], c['openhour'], c['price'], c['image1'], c['image2'], c['image3'], c['image4']);
       cafes.add(cafe);
     }
-    print(data.body);
+    print(response.data);
+    print(jsonData);
     return cafes;
   }
   @override
@@ -100,7 +103,7 @@ class CafePlaceList extends StatelessWidget {
                 },
               );
             }
-          },
+          //},
         ),
     );
     /*return Scrollbar(
