@@ -1,11 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_bandung/detail_screen.dart';
-import 'package:wisata_bandung/model/cafe_place.dart';
+//import 'package:wisata_bandung/model/cafe_place.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
+Future<List<CafeData>> fetchCafe() async {
+  final response =
+  await http.get(Uri.parse('http://10.0.2.2:8000/api/cafe'));
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((data) => CafeData.fromJson(data)).toList();
+  } else {
+    throw Exception('Unexpected error occured!');
+  }
+}
+class CafeData {
+  late final int id;
+  late final String name;
+  late final String description;
+  late final String openhour;
+  late final String address;
+  late final int price;
+  late final String openday;
+  late final String image1;
+  late final String image2;
+  late final String image3;
+  late final String image4;
 
+  CafeData({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.openhour,
+    required this.address,
+    required this.price,
+    required this.openday,
+    required this.image1,
+    required this.image2,
+    required this.image3,
+    required this.image4,
+
+  });
+
+
+
+
+  factory CafeData.fromJson(Map<String, dynamic> json) {
+    return CafeData(
+        id: json['id'],
+        name : json['name'],
+        description : json['description'],
+        openhour : json['openhour'],
+    address : json['address'],
+    price : json['price'],
+    openday : json['openday'],
+    image1 : json['image1'],
+    image2 : json['image2'],
+    image3 : json['image3'],
+    image4 : json['image4'],
+      //createdAt = json['created_at'];
+      //updatedAt = json['updated_at'];
+    );
+  }
+}
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,213 +72,78 @@ class MainScreen extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints){
-            return CafePlaceList();
+          return CafePlaceList();
         },
       ),
     );
   }
 }
+
 class CafePlaceList extends StatelessWidget {
-  Future<List<CafePlace>> getCafe() async {
-    final Dio dio = new Dio();
-    var response = await dio.get("http://127.0.0.1:8000/api/cafe");
-    var jsonData = json.decode(response.data);
-    List<CafePlace> cafes = [];
-    for(var c in jsonData){
-      CafePlace cafe = CafePlace(c["name"],c["address"],c["description"],c["openday"], c['openhour'], c['price'], c['image1'], c['image2'], c['image3'], c['image4']);
-      cafes.add(cafe);
-    }
-    print(response.data);
-    print(jsonData);
-    return cafes;
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-        isAlwaysShown: true,
-        showTrackOnHover: true,
-        child: FutureBuilder(
-          future: getCafe(),
-          builder: (BuildContext context, AsyncSnapshot snapshot){
-            if(snapshot.data==null){
-              return Container(
-                  child: Center(
-                      child: Text("Loading...")
-                  )
-              );
-            } else{
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index){
-                  final CafePlace place = snapshot.data[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return DetailScreen(place: place,);
-                      }));
-                    },
-                    child: Card(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 1,
-                            child: Image.asset(place.image1),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      place.name,
-                                      style: TextStyle(fontSize: 16.0),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(place.address),
-                                  ],
-                                ),
-                              )
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                  /*return ListTile(
-                    title: Text(snapshot.data[index].title),
-                    onTap: (){
-                      Navigator.push(context,
-                          new MaterialPageRoute(builder: (context) =>DetailPage(snapshot.data[index]))
-                      );
-                    },
-                  );*/
-                },
-              );
-            }
-          //},
-        ),
-    );
-    /*return Scrollbar(
       isAlwaysShown: true,
       showTrackOnHover: true,
-      child: ListView.builder(
-        itemBuilder: (context, index){
-          final CafePlace place = cafePlaceList[index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return DetailScreen(place: place,);
-              }));
-            },
-            child: Card(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(place.imageAsset),
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              place.name,
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(place.location),
-                          ],
+      child: FutureBuilder<List<CafeData>>(
+        future: fetchCafe(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if(snapshot.data==null){
+            return Container(
+                child: Center(
+                    child: Text("Loading...")
+                )
+            );
+          } else{
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index){
+                final CafeData place = snapshot.data[index];
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return DetailScreen(cafeId: place.id, place: place);
+                    }));
+                  },
+                  child: Card(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Image.network(place.image1),
                         ),
-                      )
-                  )
-                ],
-              ),
-            ),
-          );
+                        Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                    place.name,
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(place.address),
+                                ],
+                              ),
+                            )
+                        )
+                      ],
+                    ),
+                  ),
+                );
+
+              },
+            );
+          }
         },
-        itemCount: cafePlaceList.length,
       ),
-    );*/
+    );
   }
 }
-/*class CafePlaceGrid extends StatelessWidget {
-  final int gridCount;
-  CafePlaceGrid({required this.gridCount});
-  Future<List<CafePlace>> getCafe() async {
-    var data = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/todos"));
-    var jsonData = json.decode(data.body);
-    List<CafePlace> cafes = [];
-    for(var c in jsonData){
-      CafePlace cafe = CafePlace(c["name"],c["address"],c["description"],c["openday"], c['openhour'], c['price'], c['image1'], c['image2'], c['image3'], c['image4']);
-      cafes.add(cafe);
-    }
-    print(cafes.length);
-    return cafes;
-  }
-  @override
-  Widget build(BuildContext context){
-    return Scrollbar(
-      isAlwaysShown: true,
-      showTrackOnHover: true,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: gridCount,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: cafePlaceList.map((place){
-            return InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return DetailScreen(place: place);
-                }));
-              },
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Image.asset(
-                        place.imageAsset,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        place.name,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, bottom: 8),
-                      child: Text(
-                        place.location,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}*/
