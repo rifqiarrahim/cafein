@@ -11,17 +11,17 @@ class CafePlace {
   final String image4;
 
   CafePlace(
-    this.name,
-    this.address,
-    this.description,
-    this.openday,
-    this.openhour,
-    this.price,
-    this.image1,
-    this.image2,
-    this.image3,
-    this.image4,
-  );
+      this.name,
+      this.address,
+      this.description,
+      this.openday,
+      this.openhour,
+      this.price,
+      this.image1,
+      this.image2,
+      this.image3,
+      this.image4,
+      );
 }
 /*var cafePlaceList = [
   CafePlace(
